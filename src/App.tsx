@@ -17,7 +17,9 @@ function App() {
       <Sidebar />
       <div>
         <Routes>
-          <Route path="/" element={<Home />}></Route>
+          <Route path="/" element={<Home />}></Route>{" "}
+          <Route path="/404" element={<ErrorPage />} />
+          <Route path="/*" element={<Navigate to={"/404"} />} />
         </Routes>
       </div>
     </Router>
