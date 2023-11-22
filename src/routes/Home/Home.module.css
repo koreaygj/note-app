@@ -1,0 +1,12 @@
+.container {
+  position: fixed;
+  flex-grow: 1;
+  background-color: #ffffff;
+  padding: 1rem;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}

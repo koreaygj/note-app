@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./Sidebar.module.css";
 
 function Sidebar() {
+  const nav = useNavigate();
   const menuItems = [
     { icon: "📝", text: "Notes" },
     { icon: "💻", text: "Coding" },
@@ -14,7 +16,11 @@ function Sidebar() {
     <div className={styles.sidebarContainer}>
       <h1>Keep</h1>
       {menuItems.map((item, index) => (
-        <div className={styles.items} key={index}>
+        <div
+          onClick={() => nav(`/${item.text}`)}
+          className={styles.items}
+          key={index}
+        >
           <span className={styles.icon}>{item.icon}</span>
           <span className={styles.text}>{item.text}</span>
         </div>
