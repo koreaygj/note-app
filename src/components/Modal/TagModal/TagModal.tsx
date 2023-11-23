@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { toggleTagsModal } from "../../../store/modal/modalSlice";
-import { addTags, removeTags } from "../../../store/tags/tagsSlice";
+import { addTags } from "../../../store/tags/tagsSlice";
 import { Tag } from "../../../types/tags";
 import styles from "./TagModal.module.css";
 
@@ -19,14 +19,32 @@ function TagModal({ type, updatedTags, handleUpdateTag }: TagModalProps) {
 
   const dispatch = useAppDispatch();
 
-  const handleAddTag = () => {
+  const handleAddTag = (e: FormEvent) => {
+    e.preventDefault();
     dispatch(addTags({ name: input, id: Date.now() }));
+    setInput("");
   };
-  console.log(tags);
   return (
     <div className={styles.modalOverlay}>
       {type === "add" ? (
-        "null"
+        <div onSubmit={handleAddTag}>
+          <div className={styles.tagList}>
+            {tags.map((tag, index) => (
+              <div key={index} className={styles.tagItem}>
+                {tag.name}
+                <div
+                  className={
+                    !isToggled
+                      ? [styles.plusMinusToggle, styles.active].join(" ")
+                      : styles.plusMinusToggle
+                  }
+                  onClick={() => setIsToggled((prev) => !prev)}
+                ></div>
+              </div>
+            ))}
+          </div>
+          <button className={styles.tagAddBtn}>Add</button>
+        </div>
       ) : (
         <div className={styles.modal}>
           <div className={styles.modalHeader}>
@@ -40,31 +58,30 @@ function TagModal({ type, updatedTags, handleUpdateTag }: TagModalProps) {
               &times;
             </button>
           </div>
-          {type === "add" ? (
-            ""
-          ) : (
+          <form onSubmit={handleAddTag}>
             <input
-              className="new-tag-input"
+              className={styles.tagInput}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="new tag..."
-              onKeyDown={(e) => e.key === "Enter"}
             />
-          )}
-          <div className={styles.tagList}>
-            {tags.map((tag, index) => (
-              <div key={index} className={styles.tagItem}>
-                {tag.name}
-                <button
-                  className={isToggled ? styles.addBtn : styles.deleteBtn}
-                  onClick={() => setIsToggled((prev) => !prev)}
-                ></button>
-              </div>
-            ))}
-          </div>
-          <button className={styles.tagAddBtn} onClick={handleAddTag}>
-            Add
-          </button>
+            <div className={styles.tagList}>
+              {tags.map((tag, index) => (
+                <div key={index} className={styles.tagItem}>
+                  {tag.name}
+                  <div
+                    className={
+                      !isToggled
+                        ? [styles.plusMinusToggle, styles.active].join(" ")
+                        : styles.plusMinusToggle
+                    }
+                    onClick={() => setIsToggled((prev) => !prev)}
+                  ></div>
+                </div>
+              ))}
+            </div>
+            <button className={styles.tagAddBtn}>Add</button>
+          </form>
         </div>
       )}
     </div>

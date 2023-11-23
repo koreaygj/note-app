@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { Tag } from "./../../types/tags";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -14,9 +15,15 @@ const tagsSlice = createSlice({
   initialState,
   reducers: {
     addTags: (state, { payload }) => {
-      state.tags.find(({ id }) => id === payload.id)
-        ? state.tags.map((tag) => (tag.id === payload.id ? payload : tag))
-        : state.tags.push(payload);
+      if (state.tags.find(({ name }) => name === payload.name)) {
+        state.tags = state.tags.map((tag) =>
+          tag.name === payload.name ? payload : tag
+        );
+        toast.warning("이미 존재하는 태그입니다.");
+      } else {
+        state.tags.push(payload);
+        toast.info("태그가 등록되었습니다.");
+      }
     },
     removeTags: (state, { payload }) => {
       state.tags = state.tags.filter(({ id }) => id !== payload.id);

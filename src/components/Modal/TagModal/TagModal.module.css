@@ -35,6 +35,15 @@
   margin: 0;
 }
 
+.tagInput {
+  width: 100%;
+  font-size: 15px;
+  padding: 5px 0;
+  margin-bottom: 5px;
+  border-radius: 3px;
+  border: 0;
+}
+
 .modalHeader button {
   background: none;
   border: none;
@@ -81,11 +90,44 @@
 }
 
 .tagAddBtn {
+  font-weight: bold;
   width: 100%;
   padding: 10px;
-  background-color: #007bff;
-  color: white;
+  background-color: #abab99;
+  color: black;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.plusMinusToggle {
+  cursor: pointer;
+  height: 15px;
+  position: relative;
+  width: 15px;
+  margin-top: 10px;
+}
+
+.plusMinusToggle:before,
+.plusMinusToggle:after {
+  background: black;
+  content: "";
+  height: 3px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 15px;
+  transition: transform 500ms ease;
+}
+
+.plusMinusToggle:after {
+  transform-origin: center;
+}
+
+.plusMinusToggle.active:after {
+  transform: rotate(90deg);
+}
+
+.plusMinusToggle.active:before {
+  transform: rotate(180deg);
 }

@@ -12,6 +12,9 @@ import ArchiveNotes from "./routes/ArchiveNotes/ArchiveNotes";
 import { useAppSelector } from "./hooks/redux";
 import AddNoteModal from "./components/Modal/AddNoteModal/AddNoteModal";
 import TagModal from "./components/Modal/TagModal/TagModal";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import TagNotes from "./routes/TagNotes/TagNotes";
 
 function App() {
   const { viewEditTagsModal, viewAddNoteModal } = useAppSelector(
@@ -22,6 +25,14 @@ function App() {
     <div className="App">
       {viewAddNoteModal && <AddNoteModal />}
       {viewEditTagsModal && <TagModal type={"edit"} />}
+
+      <ToastContainer
+        position="bottom-right"
+        theme="colored"
+        pauseOnHover
+        autoClose={1500}
+      />
+
       <Router>
         <Sidebar />
         <div>
@@ -29,6 +40,7 @@ function App() {
             <Route path="/" element={<Home />}></Route>
             <Route path="/notes" element={<Home />}></Route>
             <Route path="/archive" element={<ArchiveNotes />} />
+            <Route path="/tags/:name" element={<TagNotes />} />
             <Route path="/404" element={<ErrorPage />} />
             <Route path="/*" element={<Navigate to={"/404"} />} />
           </Routes>
