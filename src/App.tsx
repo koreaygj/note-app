@@ -1,5 +1,5 @@
 import "./App.css";
-import Sidebar from "./layout/sidebar/Sidebar";
+import Sidebar from "./layout/Sidebar/Sidebar";
 import {
   Navigate,
   Route,
@@ -9,10 +9,19 @@ import {
 import Home from "./routes/Home/Home";
 import ErrorPage from "./routes/ErrorPage";
 import ArchiveNotes from "./routes/ArchiveNotes/ArchiveNotes";
+import { useAppSelector } from "./hooks/redux";
+import AddNoteModal from "./components/Modal/AddNoteModal/AddNoteModal";
+import TagModal from "./components/Modal/TagModal/TagModal";
 
 function App() {
+  const { viewEditTagsModal, viewAddNoteModal } = useAppSelector(
+    (state) => state.modal
+  );
+
   return (
     <div className="App">
+      {viewAddNoteModal && <AddNoteModal />}
+      {viewEditTagsModal && <TagModal type={"edit"} />}
       <Router>
         <Sidebar />
         <div>
