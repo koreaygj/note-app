@@ -4,6 +4,7 @@ import { toggleTagsModal } from "../../../store/modal/modalSlice";
 import { addTags } from "../../../store/tags/tagsSlice";
 import { Tag } from "../../../types/tags";
 import styles from "./TagModal.module.css";
+import { FaMinus, FaPlus, FaTimes } from "react-icons/fa";
 
 interface TagModalProps {
   type: string;
@@ -24,31 +25,47 @@ function TagModal({ type, updatedTags, handleUpdateTag }: TagModalProps) {
     dispatch(addTags({ name: input, id: Date.now() }));
     setInput("");
   };
+
+  console.log(type);
   return (
     <div className={styles.modalOverlay}>
       {type === "add" ? (
-        <div onSubmit={handleAddTag}>
-          <div className={styles.tagList}>
-            {tags.map((tag, index) => (
-              <div key={index} className={styles.tagItem}>
-                {tag.name}
-                <div
-                  className={
-                    !isToggled
-                      ? [styles.plusMinusToggle, styles.active].join(" ")
-                      : styles.plusMinusToggle
-                  }
-                  onClick={() => setIsToggled((prev) => !prev)}
-                ></div>
-              </div>
-            ))}
+        <div className={styles.modal}>
+          <div className={styles.modalHeader}>
+            <h3>{`${type} the Tag`}</h3>
+            <button
+              className={styles.tagModalClose}
+              onClick={() =>
+                dispatch(toggleTagsModal({ type: type, view: false }))
+              }
+            >
+              &times;
+            </button>
           </div>
-          <button className={styles.tagAddBtn}>Add</button>
+          <div>
+            <div className={styles.tagList}>
+              {tags.map((tag, index) => (
+                <div key={index} className={styles.tagItem}>
+                  {tag.name}
+                  {updatedTags?.find(
+                    (updatedTag: Tag) => updatedTag.name === tag.name
+                  ) ? (
+                    <FaMinus
+                      onClick={() => handleUpdateTag!(tag.name, "remove")}
+                    />
+                  ) : (
+                    <FaPlus onClick={() => handleUpdateTag!(tag.name, "add")} />
+                  )}
+                </div>
+              ))}
+            </div>
+            <button className={styles.tagAddBtn}>Add</button>
+          </div>
         </div>
       ) : (
         <div className={styles.modal}>
           <div className={styles.modalHeader}>
-            <h3>{type === "add" ? "ADD" : "EDIT"}</h3>
+            <h3>{type}</h3>
             <button
               className={styles.tagModalClose}
               onClick={() =>
@@ -69,14 +86,7 @@ function TagModal({ type, updatedTags, handleUpdateTag }: TagModalProps) {
               {tags.map((tag, index) => (
                 <div key={index} className={styles.tagItem}>
                   {tag.name}
-                  <div
-                    className={
-                      !isToggled
-                        ? [styles.plusMinusToggle, styles.active].join(" ")
-                        : styles.plusMinusToggle
-                    }
-                    onClick={() => setIsToggled((prev) => !prev)}
-                  ></div>
+                  <FaTimes />
                 </div>
               ))}
             </div>

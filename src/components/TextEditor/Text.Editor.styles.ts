@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div<{ noteColor: string }>`
   .ql-editor {
-    height: 300px;
+    height: 250px;
     background-color: ${({ noteColor }) => noteColor};
   }
 `;

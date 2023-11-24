@@ -62,6 +62,11 @@ function AddNoteModal() {
               value={content}
               setValue={setContent}
             />
+            <div className={styles.tagsContainer}>
+              {updatedTags.map((tag) => (
+                <span>{tag.name}</span>
+              ))}
+            </div>
             <div className={styles.noteProps}>
               <button
                 onClick={() => {
@@ -71,23 +76,29 @@ function AddNoteModal() {
               >
                 태그 추가
               </button>
-              <select
-                value={backgroundColor}
-                onChange={(e) => setBackgroundColor(e.target.value)}
-              >
-                <option value="white">white</option>
-                <option value="tomato">red</option>
-                <option value="skyblue">blue</option>
-                <option value="sandybrown">yellow</option>
-              </select>
-              <select
-                value={priority}
-                onChange={(e) => setPriority(e.target.value)}
-              >
-                <option value="High">High</option>
-                <option value="Medium">Medium</option>
-                <option value="Low">Low</option>
-              </select>
+              <div>
+                <label>배경색 </label>
+                <select
+                  value={backgroundColor}
+                  onChange={(e) => setBackgroundColor(e.target.value)}
+                >
+                  <option value="white">white</option>
+                  <option value="tomato">red</option>
+                  <option value="skyblue">blue</option>
+                  <option value="sandybrown">yellow</option>
+                </select>
+              </div>
+              <div>
+                <label>우선순위 </label>
+                <select
+                  value={priority}
+                  onChange={(e) => setPriority(e.target.value)}
+                >
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+                </select>
+              </div>
             </div>
           </div>
           <div className={styles.modalFooter}>

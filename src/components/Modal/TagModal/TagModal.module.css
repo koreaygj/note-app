@@ -1,5 +1,6 @@
 .modalOverlay {
   position: fixed;
+  z-index: 1;
   top: 0;
   left: 0;
   right: 0;
@@ -100,7 +101,8 @@
   cursor: pointer;
 }
 
-.plusMinusToggle {
+.plusBtn,
+.minusBtn {
   cursor: pointer;
   height: 15px;
   position: relative;
@@ -108,8 +110,8 @@
   margin-top: 10px;
 }
 
-.plusMinusToggle:before,
-.plusMinusToggle:after {
+.plusBtn:before,
+.plusBtn:after {
   background: black;
   content: "";
   height: 3px;
@@ -120,14 +122,14 @@
   transition: transform 500ms ease;
 }
 
-.plusMinusToggle:after {
+.plusBtn:after {
   transform-origin: center;
 }
 
-.plusMinusToggle.active:after {
+.minusBtn:after {
   transform: rotate(90deg);
 }
 
-.plusMinusToggle.active:before {
+.minusBtn:before {
   transform: rotate(180deg);
 }
