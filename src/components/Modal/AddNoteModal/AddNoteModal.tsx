@@ -6,6 +6,7 @@ import {
 } from "../../../store/modal/modalSlice";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import TagModal from "../TagModal/TagModal";
+import TextEditor from "../../TextEditor/TextEditor";
 
 function AddNoteModal() {
   const { viewAddTagsModal } = useAppSelector((state) => state.modal);
@@ -56,17 +57,17 @@ function AddNoteModal() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
-            <textarea
-              style={{ backgroundColor: backgroundColor }}
-              placeholder="노트 내용"
+            <TextEditor
+              color={backgroundColor}
               value={content}
-              onChange={(e) => setContent(e.target.value)}
+              setValue={setContent}
             />
             <div className={styles.noteProps}>
               <button
                 onClick={() => {
                   dispatch(toggleTagsModal({ type: "add", view: true }));
                 }}
+                className={styles.tagBtn}
               >
                 태그 추가
               </button>
