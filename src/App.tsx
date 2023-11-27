@@ -15,6 +15,7 @@ import TagModal from "./components/Modal/TagModal/TagModal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TagNotes from "./routes/TagNotes/TagNotes";
+import TrashCan from "./routes/TrashCan/TrashCan";
 
 function App() {
   const { viewEditTagsModal, viewAddNoteModal } = useAppSelector(
@@ -35,16 +36,15 @@ function App() {
 
       <Router>
         <Sidebar />
-        <div>
-          <Routes>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/notes" element={<Home />}></Route>
-            <Route path="/archive" element={<ArchiveNotes />} />
-            <Route path="/tags/:name" element={<TagNotes />} />
-            <Route path="/404" element={<ErrorPage />} />
-            <Route path="/*" element={<Navigate to={"/404"} />} />
-          </Routes>
-        </div>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/notes" element={<Home />}></Route>
+          <Route path="/archive" element={<ArchiveNotes />} />
+          <Route path="/tags/:name" element={<TagNotes />} />
+          <Route path="/trash" element={<TrashCan />} />
+          <Route path="/404" element={<ErrorPage />} />
+          <Route path="/*" element={<Navigate to={"/404"} />} />
+        </Routes>
       </Router>
     </div>
   );

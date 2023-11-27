@@ -1,23 +1,30 @@
-import { useParams } from "react-router-dom";
 import AddNoteModal from "../../components/Modal/AddNoteModal/AddNoteModal";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { toggleAddNoteModal } from "../../store/modal/modalSlice";
+import { CiSquarePlus } from "react-icons/ci";
+import { HeaderContainer } from "./Header.style";
 
-function Header() {
-  const { viewAddNoteModal } = useAppSelector((state) => state.modal);
+interface HeaderProp {
+  type: string;
+}
+
+function Header({ type }: HeaderProp) {
   const dispatch = useAppDispatch();
-  const { name } = useParams() as { name: string };
-  if (name === "/404") {
+  const { viewAddNoteModal } = useAppSelector((state) => state.modal);
+
+  if (type === "/404") {
     return null;
   }
   return (
-    <div>
-      <h1>{name === undefined ? "Home" : name}</h1>
-      <button onClick={() => dispatch(toggleAddNoteModal(true))}>
-        새로운 노트
-      </button>
+    <HeaderContainer>
       {viewAddNoteModal && <AddNoteModal />}
-    </div>
+      <h1>{type === undefined ? "Home" : type.toUpperCase()}</h1>
+      <CiSquarePlus
+        className="add-note-btn"
+        size="50"
+        onClick={() => dispatch(toggleAddNoteModal(true))}
+      />
+    </HeaderContainer>
   );
 }
 export default Header;
