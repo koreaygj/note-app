@@ -1,14 +1,8 @@
-import styles from "./Home.module.css";
 import { useAppSelector } from "../../hooks/redux";
-import Header from "../../layout/Header/Header";
+import MainWrapper from "../../components/MainWrapper/MainWrapper";
 function Home() {
-  const curMenu = useAppSelector((state) => state.menu);
-  console.log(curMenu);
-  return (
-    <div className={styles.container}>
-      <Header />
-    </div>
-  );
+  const { mainNotes } = useAppSelector((state) => state.notesList);
+  return <MainWrapper notes={mainNotes} type="mainNotes" />;
 }
 
 export default Home;
