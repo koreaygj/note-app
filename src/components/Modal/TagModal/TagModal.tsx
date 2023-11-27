@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { toggleTagsModal } from "../../../store/modal/modalSlice";
-import { addTags } from "../../../store/tags/tagsSlice";
+import { addTags, removeTags } from "../../../store/tags/tagsSlice";
 import { Tag } from "../../../types/tags";
 import styles from "./TagModal.module.css";
 import { FaMinus, FaPlus, FaTimes } from "react-icons/fa";
@@ -16,7 +16,6 @@ function TagModal({ type, updatedTags, handleUpdateTag }: TagModalProps) {
   const { tags } = useAppSelector((state) => state.tags);
 
   const [input, setInput] = useState("");
-  const [isToggled, setIsToggled] = useState(false);
 
   const dispatch = useAppDispatch();
 
@@ -32,7 +31,7 @@ function TagModal({ type, updatedTags, handleUpdateTag }: TagModalProps) {
       {type === "add" ? (
         <div className={styles.modal}>
           <div className={styles.modalHeader}>
-            <h3>{`${type} the Tag`}</h3>
+            <h3>{`${type.toUpperCase()} the Tag`}</h3>
             <button
               className={styles.tagModalClose}
               onClick={() =>
@@ -59,13 +58,12 @@ function TagModal({ type, updatedTags, handleUpdateTag }: TagModalProps) {
                 </div>
               ))}
             </div>
-            <button className={styles.tagAddBtn}>Add</button>
           </div>
         </div>
       ) : (
         <div className={styles.modal}>
           <div className={styles.modalHeader}>
-            <h3>{type}</h3>
+            <h3>{`${type.toUpperCase()} the Tag`}</h3>
             <button
               className={styles.tagModalClose}
               onClick={() =>
@@ -86,7 +84,9 @@ function TagModal({ type, updatedTags, handleUpdateTag }: TagModalProps) {
               {tags.map((tag, index) => (
                 <div key={index} className={styles.tagItem}>
                   {tag.name}
-                  <FaTimes />
+                  <FaTimes
+                    onClick={() => dispatch(removeTags({ id: tag.id }))}
+                  />
                 </div>
               ))}
             </div>

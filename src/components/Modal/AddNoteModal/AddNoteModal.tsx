@@ -9,17 +9,20 @@ import TagModal from "../TagModal/TagModal";
 import TextEditor from "../../TextEditor/TextEditor";
 import { Note } from "../../../types/notes";
 import { toast } from "react-toastify";
-import { setMainNotes } from "../../../store/noteList/noteListSlice";
+import {
+  setEditNote,
+  setMainNotes,
+} from "../../../store/noteList/noteListSlice";
 
 function AddNoteModal() {
   const { viewAddTagsModal } = useAppSelector((state) => state.modal);
   const { editNote } = useAppSelector((state) => state.notesList);
 
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [backgroundColor, setBackgroundColor] = useState("");
+  const [title, setTitle] = useState(editNote?.title || "");
+  const [content, setContent] = useState(editNote?.content || "");
+  const [backgroundColor, setBackgroundColor] = useState(editNote?.color || "");
   const [updatedTags, setUpdatedTags] = useState(editNote?.tags || []);
-  const [priority, setPriority] = useState("Low");
+  const [priority, setPriority] = useState(editNote?.priority || "Low");
 
   const dispatch = useAppDispatch();
 
@@ -32,7 +35,8 @@ function AddNoteModal() {
     }
   };
 
-  const date = Date.now().toString();
+  const tmp = new Date(Date.now());
+  const date = tmp.toLocaleString();
 
   const createNote = () => {
     if (!title) {
@@ -64,6 +68,7 @@ function AddNoteModal() {
         id: Date.now(),
       };
     }
+    dispatch(setEditNote(null));
     dispatch(setMainNotes(note));
     dispatch(toggleAddNoteModal(false));
   };
@@ -99,7 +104,7 @@ function AddNoteModal() {
             />
             <div className={styles.tagsContainer}>
               {updatedTags.map((tag) => (
-                <span>{tag.name}</span>
+                <span key={tag.id}>{tag.name}</span>
               ))}
             </div>
             <div className={styles.noteProps}>
@@ -138,7 +143,7 @@ function AddNoteModal() {
           </div>
           <div className={styles.modalFooter}>
             <button type="submit" onClick={createNote}>
-              생성하기
+              {editNote ? "저장하기" : "생성하기"}
             </button>
           </div>
         </div>
